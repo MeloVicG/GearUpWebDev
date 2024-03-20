@@ -1,95 +1,106 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// Importing necessary components and hooks from Next.js and React
+'use client'
 
-export default function Home() {
+import React, { useRef, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from './page.module.scss'; // Assuming you have CSS module for styling
+import { Button } from 'react-bootstrap';
+import webdevGlogo from '../../public/webdevGlogo.png'
+import ContactUs from './components/contact-us';
+
+
+
+const Home = () => {
+  const [showContact, setShowContact] = useState<boolean>(false);
+
+  const toggleContactInfo = () => {
+    setShowContact(!showContact);
+  };
+
+  const targetRef = useRef<HTMLDivElement>(null);
+  // const scrollToBoxOneCard = () => {
+  // targetRef.current?.scrollTop({ behavior: 'smooth' });
+  // };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 1000,
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className={styles.container}>
+      <Head>
+        <title>G Website Development</title>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
+
+      {!showContact ? (
+        <main className={styles.main}>
+          {/* Logo toggling */}
+          <div className={styles.logoBox} onClick={toggleContactInfo}>
+            <h3 className={styles.contactArrow}> Need a website? &rarr;</h3>
+            <Image src={webdevGlogo} alt="" className={styles.mainLogo} />
+            {/* <div className={styles.contactInfo }  > */}
+          </div>
+
+          <h1 className={styles.title}>
+            Welcome to
+          </h1>
+          <h1 className={styles.title}>
+            GearUp WebDev Solutions
+          </h1>
+
+          <div className={styles.projects}>
+            <Button onClick={scrollToTop} className={styles.card} >
+              <br />
+              <br />
+              <h1>FitstackZ</h1>
+              <h1 style={{ fontSize: "3em" }}>&darr;</h1>
+            </Button>
+            
+          </div>
+        </main>
+      ) : (
+        <div className={`${styles.contactInfo} ${showContact ? styles.slideInRight : ''}`}>
+          <h1 onClick={toggleContactInfo}>&larr;</h1>
+          <ContactUs />
         </div>
+      )}
+      <div style={{ margin: "20em 10px", border: "3px dotted red" }}>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugiat! Vero asperiores iste maiores, eligendi error rem quas numquam explicabo adipisci? Qui vitae saepe culpa. Nesciunt sapiente possimus quidem ut.</p>
+      </div>
+      <div ref={targetRef}>
+        <h1>hello</h1>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
+      <footer className={styles.footer}>
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          href=""
+          // href="https://victorgportfolio.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
+          Thank You
         </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </footer>
+    </div>
   );
 }
+
+export default Home;
