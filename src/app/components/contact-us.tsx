@@ -121,7 +121,8 @@ const ContactUs: React.FC = () => {
                 <Form.Control name="description" as="textarea" placeholder="How can I help?" value={formState.description} onChange={handleChange} />
             </Form.Group>
             <Button type="submit" disabled={isSubmitting} >
-                {isSubmitting ? 'Sending...' : 'Send'}</Button>
+                {isSubmitting ? 'Sending...' : 'Send'}
+            </Button>
         </Form>
     );
 };
