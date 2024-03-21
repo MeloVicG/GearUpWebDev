@@ -1,52 +1,34 @@
-// import * as React from 'react';
-// // import { Button, Html } from "@react-email/components";
-
-// interface EmailTemplateProps {
-//     firstName: string;
-//     lastName: string;
-//     phone: number;
-//     email: string;
-//     description: string;
-// }
-
-// export const EmailTemplate: React.FC<EmailTemplateProps> = ({
-//     firstName,
-//     lastName,
-//     phone,
-//     email,
-//     description,
-// }) => (
-//     <div>
-//         <h1>Welcome, {firstName}!</h1>
-//         <p>Last Name: {lastName}</p>
-//         <p>Phone: {phone}</p>
-//         <p>Email: {email}</p>
-//         <p>Description: {description}</p>
-//     </div>
-// );
-
-
 'use client';
 
-import { log } from 'console';
+
 import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import styles from '@/app/page.module.scss'
+// import { Button } from '@react-email/components';
+
 
 interface FormState {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: number | undefined;
     email: string;
-    message: string;
+    description: string;
 }
 
 const ContactUs: React.FC = () => {
     const [formState, setFormState] = useState<FormState>({
-        name: '',
+        firstName: '',
+        lastName: '',
+        phone: undefined,
         email: '',
-        message: '',
+        description: '',
     });
     const [errors, setErrors] = useState<FormState>({
-        name: '',
+        firstName: '',
+        lastName: '',
+        phone: undefined,
         email: '',
-        message: '',
+        description: '',
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,9 +39,7 @@ const ContactUs: React.FC = () => {
         return re.test(email);
     };
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     };
 
@@ -68,24 +48,31 @@ const ContactUs: React.FC = () => {
 
         try {
             setIsSubmitting(true);
-            const errors = { name: '', email: '', message: '' };
+            const errors = { firstName: '', lastName: '', phone: undefined, email: '', description: '' };
 
-            if (formState.name === '') {
-                errors.name = 'Name is required';
+            if (formState.firstName === '') {
+                errors.firstName = 'First Name is required';
             }
+            if (formState.lastName === '') {
+                errors.lastName = 'Last Name is required';
+            }
+            // if (formState.phone === null || undefined) {
+            //     errors.phone = 'Phone Number is required';
+            // }
 
             if (formState.email === '' || !validateEmail(formState.email)) {
                 errors.email = 'Valid email is required';
             }
 
-            if (formState.message === '') {
-                errors.message = 'Message is required';
+
+            if (formState.description === '') {
+                errors.description = 'Message is required';
             }
 
             setErrors(errors);
-            
-            if (!errors.name && !errors.email && !errors.message) {
-                try{
+
+            if (!errors.firstName && !errors.lastName && !errors.phone && !errors.email && !errors.description) {
+                try {
                     await fetch('/api/email', {
                         method: 'POST',
                         headers: {
@@ -94,74 +81,48 @@ const ContactUs: React.FC = () => {
                         body: JSON.stringify(formState),
                     });
                     console.log("email sent!");
-                    setFormState({ name: '', email: '', message: '' });
+                    setFormState({ firstName: '', lastName: '', phone: undefined, email: '', description: '' });
                 }
-                catch{
+                catch {
                     console.log("email sent FAILED!");
                 }
             }
-            else{
+            else {
                 console.log("validation failed, did not send anything");
             }
         } catch (error) {
             console.log("Error: email did not send");
-            
+
         } finally {
             setIsSubmitting(false);
         }
     };
 
     return (
-        <form
-            className="flex flex-col gap-4 justify-center"
-            onSubmit={handleSubmit}
-        >
-            <div className="flex flex-col gap-1">
-                <input
-                    className="w-full rounded-md border-2 border-slate-300 px-2 py-1 outline-purple-500"
-                    type="text"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                />
-                {errors.name && <p className="text-sm text-red-400">{errors.name}</p>}
-            </div>
-
-            <div className="flex flex-col gap-1">
-                <input
-                    className="w-full rounded-md border-2 border-slate-300 px-2 py-1 outline-purple-500"
-                    type="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                />
-                {errors.email && <p className="text-sm text-red-400">{errors.email}</p>}
-            </div>
-
-            <div className="flex flex-col gap-1">
-                <textarea
-                    className="w-full rounded-md border-2 border-slate-300 px-2 py-1 outline-purple-500"
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    placeholder="Message"
-                    rows={6}
-                />
-                {errors.message && (
-                    <p className="text-sm text-red-400">{errors.message}</p>
-                )}
-            </div>
-
-            <button
-                disabled={isSubmitting}
-                className="rounded-md bg-purple-500 text-white px-2 py-1 block"
-                type="submit"
-            >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-            </button>
-        </form>
+        <Form onSubmit={handleSubmit} className={styles.contactInputs}>
+            <Form.Group className="mb-3" controlId="formFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control name="firstName" type="text" placeholder="John" value={formState.firstName} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control name="lastName" type="text" placeholder="Doe" value={formState.lastName} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formPhoneNumber">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control name="phone" type="tel" placeholder="xxx-xxx-xxxx" value={formState.phone !== undefined ? formState.phone.toString() : ''} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control name="email" type="text" placeholder="example@email.com" value={formState.email} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formDescription">
+                <Form.Label>Description</Form.Label>
+                <Form.Control name="description" as="textarea" placeholder="How can I help?" value={formState.description} onChange={handleChange} />
+            </Form.Group>
+            <Button type="submit" disabled={isSubmitting} >
+                {isSubmitting ? 'Sending...' : 'Send'}</Button>
+        </Form>
     );
 };
 

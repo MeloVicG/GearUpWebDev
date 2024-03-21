@@ -1,6 +1,6 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import styles from '../src/app/page.module.scss'
+import React from 'react'
+// import { Button, Form } from 'react-bootstrap'
+// import styles from '../src/app/page.module.scss'
 
 // import { Button, Html } from "@react-email/components";
 import {
@@ -15,53 +15,33 @@ import {
 import { CSSProperties } from 'react';
 
 
-
-interface FormData {
-    firstName: string
-    lastName: string
-    phone: number
-    email: string
-    description: string
-}
-
 interface ContactUsEmailProps {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: number ;
     email: string;
-    message: string;
+    description: string;
 }
 
-// const ContactPage = () => {
-//     const [formData, setFormData] = useState<FormData>({
-//         firstName: '',
-//         lastName: '',
-//         phone: 0,
-//         email: '',
-//         description: '',
-//     });
-// }
-
-
-
-// ---------------------------------------------------------------------------------
-
-interface ContactUsEmailProps {
-    name: string;
-    email: string;
-    message: string;
-}
 
 export const ContactUsEmail = ({
-    name,
+    firstName,
+    lastName,
+    phone,
     email,
-    message,
+    description
 }: ContactUsEmailProps) => (
     <Html>
         <Head />
-        <Preview>Thanks for contacting us {name}!</Preview>
+        <Preview>GearUP WebDev Request {firstName} {lastName}!</Preview>
         <Body style={main}>
             <Container style={container}>
-                <Text style={paragraph}>Hi {name},</Text>
-                <Text style={paragraph}>We have received your message</Text>
+                <Text style={paragraph}>You have a GearUp WebDev Request from {firstName} {lastName},</Text>
+                        <Text style={paragraph}>Client info:</Text>
+                        <Text style={paragraph}>First Name: {firstName}</Text>
+                        <Text style={paragraph}>Last Name: {lastName}</Text>
+                        <Text style={paragraph}>Phone Number: {phone}</Text>
+                        <Text style={paragraph}>Email: {email}</Text>
                 <Markdown
                     markdownContainerStyles={{
                         boxShadow: '0 0 10px rgba(0, 0, 0, 0.05)',
@@ -71,11 +51,8 @@ export const ContactUsEmail = ({
                         border: '1px solid #e5e7eb',
                     }}
                 >
-                    {message}
+                    {description}
                 </Markdown>
-                <Text style={paragraph}>
-                    We will get back to you as soon as possible at {email}.
-                </Text>
             </Container>
         </Body>
     </Html>
