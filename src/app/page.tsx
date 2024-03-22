@@ -55,7 +55,6 @@ const Home = () => {
           <div className={styles.projects}>
             <Button onClick={scrollToTop} className={styles.card} >
               <br />
-              <br />
               <h1>FitstaX</h1>
               <h1 style={{ fontSize: "3em" }}>&darr;</h1>
             </Button>
